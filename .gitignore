@@ -1,1 +1,10 @@
-data/01_raw/`ndata/02_intermediate/`nmodels/`n*.ipynb`n*.log`n.env
+data/01_raw/
+data/02_interim/
+data/03_processed/
+models/
+*.ipynb
+*.log
+.env
+venv/
+.venv/
+env/
