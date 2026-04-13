@@ -1,1 +1,10 @@
-data/01_raw/`ndata/02_intermediate/`nmodels/`n*.ipynb`n*.log`n.env
+.venv/
+
+data/01_raw/
+data/02_intermediate/
+data/03_processed/
+
+src/data/__pycache__/
+src/features/__pycache__/
+src/models/__pycache__/
+src/visualization/__pycache__/
