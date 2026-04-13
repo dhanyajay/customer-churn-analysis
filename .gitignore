@@ -1,1 +1,7 @@
 data/01_raw/`ndata/02_intermediate/`nmodels/`n*.ipynb`n*.log`n.env
+
+# Raw data CSV files
+data/01_raw/*.csv
+*.csv
+
+.venv/
