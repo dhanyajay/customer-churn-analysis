@@ -5,5 +5,8 @@ data/01_raw/*.csv
 *.csv
 
 .venv/
+.env
+.venv/
+venv/
 
 __pycache__/
