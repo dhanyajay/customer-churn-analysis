@@ -28,17 +28,17 @@ class Hypothesis6Correlation:
             if feature in self.data.columns:
                 test_subset = pd.DataFrame({feature: self.data[feature], 'churn': churn_numeric}).dropna()
                 if len(test_subset) > 0:
-                    # Pearson correlation
-                    pearson_corr, pearson_p = pearsonr(test_subset[feature], test_subset['churn'])
-                    # Spearman correlation
+                    # Spearman correlation (best suited for ordinal target)
                     spearman_corr, spearman_p = spearmanr(test_subset[feature], test_subset['churn'])
+                    alpha = 0.05
+                    significant = spearman_p < alpha
 
                     results.append({
                         'Feature': feature,
-                        'Pearson_Corr': pearson_corr,
-                        'Pearson_P': pearson_p,
-                        'Spearman_Corr': spearman_corr,
-                        'Spearman_P': spearman_p
+                        'Test': 'Spearman Correlation',
+                        'Statistic': round(spearman_corr, 2),
+                        'P-Value': round(spearman_p, 2),
+                        'Significant': significant
                     })
 
         return results

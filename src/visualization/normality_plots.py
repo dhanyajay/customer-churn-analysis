@@ -33,22 +33,28 @@ class NormalityPlots:
         for i, feature in enumerate(valid_features):
             values = self.data[feature].dropna()
 
+            # Handle outliers for visualization by filtering top 1% 
+            # so the graph is drawn with appropriate visualization as requested
+            q99 = values.quantile(0.99)
+            capped_values = values[values <= q99]
+            
             # --- Histogram with normal curve overlay ---
-            axes[i, 0].hist(values, bins=50, density=True, alpha=0.7,
+            axes[i, 0].hist(capped_values, bins=50, density=True, alpha=0.7,
                             color='steelblue', edgecolor='white')
-            mu, sigma = values.mean(), values.std()
-            x_range = np.linspace(values.min(), values.max(), 200)
+            mu, sigma = capped_values.mean(), capped_values.std()
+            x_range = np.linspace(capped_values.min(), capped_values.max(), 200)
             axes[i, 0].plot(x_range, stats.norm.pdf(x_range, mu, sigma),
                             'r-', linewidth=2, label='Normal Fit')
-            axes[i, 0].set_title(f'Histogram: {feature}',
+            axes[i, 0].set_title(f'Histogram: {feature} (Capped 99th)',
                                  fontsize=11, fontweight='bold')
             axes[i, 0].set_xlabel(feature)
             axes[i, 0].set_ylabel('Density')
             axes[i, 0].legend()
-
+            
             # --- Q-Q Plot ---
-            stats.probplot(values, dist="norm", plot=axes[i, 1])
-            axes[i, 1].set_title(f'Q-Q Plot: {feature}',
+            # Q-Q plot works better when the bulk values are visualised without getting squashed by massive outliers.
+            stats.probplot(capped_values, dist="norm", plot=axes[i, 1])
+            axes[i, 1].set_title(f'Q-Q Plot: {feature} (Capped 99th)',
                                  fontsize=11, fontweight='bold')
             axes[i, 1].get_lines()[0].set(markerfacecolor='steelblue',
                                            markeredgecolor='steelblue',

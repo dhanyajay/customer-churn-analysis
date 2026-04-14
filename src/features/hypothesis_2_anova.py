@@ -28,12 +28,13 @@ class Hypothesis2ANOVA:
                     groups = [group[feature].values for name, group in test_subset.groupby(self.target)]
                     if len(groups) > 1:
                         f_stat, p_value = f_oneway(*groups)
-                        significant = p_value < 0.05
+                        alpha = 0.05
+                        significant = p_value < alpha
                         results.append({
                             'Feature': feature,
                             'Test': 'ANOVA',
-                            'Statistic': f_stat,
-                            'P-Value': p_value,
+                            'Statistic': round(f_stat, 2),
+                            'P-Value': round(p_value, 2),
                             'Significant': significant
                         })
 

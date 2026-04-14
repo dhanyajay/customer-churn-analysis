@@ -18,8 +18,7 @@ class Hypothesis1ChiSquare:
         print("Null: Feature is independent of churn category")
         print("Alternative: Feature is dependent on churn category")
 
-        categorical_features = ['retention_customer_tier', 'retention_case_type', 'retention_pull_type',
-                                'retention_current_status', 'retention_resolution_status', 'renewal_type']
+        categorical_features = ['retention_customer_tier', 'retention_case_type', 'retention_pull_type', 'retention_current_status', 'retention_resolution_status', 'renewal_type']
 
         results = []
         for feature in categorical_features:
@@ -28,12 +27,13 @@ class Hypothesis1ChiSquare:
                 if len(test_subset) > 0 and len(test_subset[feature].unique()) > 1:
                     contingency_table = pd.crosstab(test_subset[feature], test_subset[self.target])
                     chi2, p_value, dof, expected = chi2_contingency(contingency_table)
-                    significant = p_value < 0.05
+                    alpha = 0.05
+                    significant = p_value < alpha
                     results.append({
                         'Feature': feature,
                         'Test': 'Chi-Square',
-                        'Statistic': chi2,
-                        'P-Value': p_value,
+                        'Statistic': round(chi2, 2),
+                        'P-Value': round(p_value, 2),
                         'Significant': significant
                     })
 
